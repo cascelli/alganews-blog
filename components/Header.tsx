@@ -1,4 +1,5 @@
-import Head from "next/head";
+//import Head from "next/head";
+import styled from "styled-components";
 
 export default function Header(props: any) {
   return (
@@ -6,7 +7,11 @@ export default function Header(props: any) {
       {/* <Head>
         <title>batata</title>
       </Head> */}
-      <h1>oi eu sou um header - {props.name}</h1>
+      <Title>oi eu sou um header - {props.name}</Title>
     </>
   );
 }
+
+const Title = styled.h1`
+  color: blue;
+`;

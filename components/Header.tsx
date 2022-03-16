@@ -13,5 +13,7 @@ export default function Header(props: any) {
 }
 
 const Title = styled.h1`
-  color: blue;
+  // color: blue;
+  // Substituido valor fixo pela propriedade theme.primaryBackground
+  color: ${(p) => p.theme.primaryBackground};
 `;

@@ -2,6 +2,7 @@
 import styled from "styled-components";
 import { transparentize } from "polished";
 import { HEADER_HEIGHT } from "../_constants";
+import Logo from "./Logo";
 
 // export default function Header(props: any) {
 //   return (
@@ -24,7 +25,8 @@ export default function Header(props: any) {
   return (
     <Wrapper>
       <Container>
-        <span>logo</span>
+        {/* <span>logo</span> */}
+        <Logo />
         <span>navbar</span>
       </Container>
     </Wrapper>

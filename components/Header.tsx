@@ -1,34 +1,14 @@
-//import Head from "next/head";
 import styled from "styled-components";
 import { transparentize } from "polished";
 import { HEADER_HEIGHT } from "../_constants";
 import Logo from "./Logo";
 import NavBar from "./NavBar";
 
-// export default function Header(props: any) {
-//   return (
-//     <>
-//       {/* <Head>
-//         <title>batata</title>
-//       </Head> */}
-//       <Title>oi eu sou um header - {props.name}</Title>
-//     </>
-//   );
-// }
-
-// const Title = styled.h1`
-//   // color: blue;
-//   // Substituido valor fixo pela propriedade theme.primaryBackground
-//   color: ${(p) => p.theme.primaryBackground};
-// `;
-
 export default function Header(props: any) {
   return (
     <Wrapper>
       <Container>
-        {/* <span>logo</span> */}
         <Logo />
-        {/* <span>navbar</span> */}
         <NavBar />
       </Container>
     </Wrapper>

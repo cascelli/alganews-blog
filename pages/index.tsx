@@ -4,6 +4,7 @@ import Head from "next/head";
 import FeaturedPost from "../components/FeaturedPost";
 import { ServerResponse } from "http";
 import PostCard from "../components/PostCard";
+import PostsGrid from "../components/PostsGrid";
 
 interface HomeProps {
   posts?: Post.Paginated;
@@ -22,10 +23,12 @@ export default function Home(props: HomeProps) {
 
       {posts?.content && <FeaturedPost postSummary={posts?.content[0]} />}
 
-      {/* slice(1) => lista todos os posts a partir do indice 1 porque o indiece 0 já está destacado acima */}
-      {posts?.content?.slice(1).map((post) => {
-        return <PostCard key={post.id} post={post} />;
-      })}
+      <PostsGrid>
+        {/* slice(1) => lista todos os posts a partir do indice 1 porque o indiece 0 já está destacado acima */}
+        {posts?.content?.slice(1).map((post) => {
+          return <PostCard key={post.id} post={post} />;
+        })}
+      </PostsGrid>
     </div>
   );
 }

@@ -1,4 +1,5 @@
 import { Post, PostService } from "danielbonifacio-sdk";
+import { GetServerSideProps } from "next";
 import Head from "next/head";
 import FeaturedPost from "../components/FeaturedPost";
 
@@ -22,9 +23,12 @@ export default function Home(props: HomeProps) {
   );
 }
 
-export async function getServerSideProps() {
+export const getServerSideProps: GetServerSideProps<HomeProps> = async (
+  context
+) => {
+  const { page } = context.query;
   const posts = await PostService.getAllPosts({
-    page: 0,
+    page: Number(page) - 1,
   });
 
   return {
@@ -32,4 +36,4 @@ export async function getServerSideProps() {
       posts,
     },
   };
-}
+};

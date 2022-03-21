@@ -1,5 +1,5 @@
 import { Post } from "danielbonifacio-sdk";
-import image from "next/image";
+import Image from "next/image";
 import Link from "next/link";
 import { transparentize } from "polished";
 import styled from "styled-components";
@@ -10,7 +10,6 @@ interface PostCardProps {
 
 export default function PostCard(props: PostCardProps) {
   const { post } = props;
-
   return (
     <Link href={`/posts/${post.id}/${post.slug}`} passHref>
       <Wrapper>
@@ -23,9 +22,7 @@ export default function PostCard(props: PostCardProps) {
               height={64}
             />
           </Editor>
-
           <PublishDate>ha 3 dias</PublishDate>
-
           <Title>{post.title}</Title>
         </Info>
       </Wrapper>
@@ -39,30 +36,26 @@ const Thumbnail = styled.div<{ bg: string }>`
   left: 0;
   width: 100%;
   height: 50%;
-
   background-image: url(${(p) => p.bg});
   background-position: center;
   background-size: cover;
-
   border-top-left-radius: ${(p) => p.theme.borderRadius};
   border-top-right-radius: ${(p) => p.theme.borderRadius};
 `;
 
 const Info = styled.div`
-    position: absolute;
-    left: 0;
-    top: 50%;
-    height: 50%;
-    width: 100%
-    z-index: 2;
-
-    margin-top: -32px;
-
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    justify-content: center;
-    align-items: center;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  height: 50%;
+  width: 100%;
+  z-index: 2;
+  margin-top: -32px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Editor = styled.div`
@@ -74,7 +67,7 @@ const Editor = styled.div`
   box-shadow: 0 0 0 4px ${(p) => p.theme.activeElementBackground};
 `;
 
-const EditorImage = styled(image)`
+const EditorImage = styled(Image)`
   width: 64px;
   height: 64px;
   border-radius: 32px;
@@ -98,24 +91,19 @@ const Wrapper = styled.a`
   border-radius: ${(p) => p.theme.borderRadius};
   box-shadow: 0 3px 6px
     ${(p) => transparentize(0.9, p.theme.activeElementForeground)};
-
   transition: 0.25s ease;
-
   * {
     transition: 0.25s ease;
   }
-
   &:hover,
   &:focus {
     background-color: ${(p) => p.theme.primaryBackground};
     box-shadow: 0 0 0 4px
-      ${(p) => transparentize(0.9, p.theme.primaryBackground)};
+      ${(p) => transparentize(0.7, p.theme.primaryBackground)};
     outline: none;
-
     * {
       color: ${(p) => p.theme.primaryForeground};
     }
-
     ${Thumbnail} {
       height: 100%;
       opacity: 0.1;

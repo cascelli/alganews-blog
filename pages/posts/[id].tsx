@@ -5,7 +5,7 @@ import { GetServerSideProps } from "next";
 import { ParsedUrlQuery } from "querystring";
 
 interface PostProps {
-  post: Post.Detailed;
+  post?: Post.Detailed;
 }
 
 export default function PostPage(props: PostProps) {
@@ -17,7 +17,7 @@ export default function PostPage(props: PostProps) {
   console.log(query);
   */
 
-  return <div>{props.post.title}</div>;
+  return <div>{props.post?.title}</div>;
 }
 
 // Obter parametros da query : método 2
@@ -31,18 +31,24 @@ export const getServerSideProps: GetServerSideProps<
   Params
 > = async ({ params }) => {
   // console.log(params);
-  if (!params) return { notFound: true };
+  try {
+    if (!params) return { notFound: true };
 
-  const { id } = params;
-  const postId = Number(id);
+    const { id } = params;
+    const postId = Number(id);
 
-  if (isNaN(postId)) return { notFound: true };
+    if (isNaN(postId)) return { notFound: true };
 
-  const post = await PostService.getExistingPost(postId);
+    const post = await PostService.getExistingPost(postId);
 
-  return {
-    props: {
-      post,
-    },
-  };
+    return {
+      props: {
+        post,
+      },
+    };
+  } catch (err) {
+    return {
+      props: {},
+    };
+  }
 };

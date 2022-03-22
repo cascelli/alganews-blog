@@ -3,7 +3,8 @@
 import { Post, PostService } from "danielbonifacio-sdk";
 import { GetServerSideProps } from "next";
 import { ParsedUrlQuery } from "querystring";
-
+import { ResourceNotFoundError } from "danielbonifacio-sdk/dist/errors";
+// import CustomError from "danielbonifacio-sdk/dist/CustomError";
 interface PostProps extends NextPageProps {
   post?: Post.Detailed;
   // Movido para o arquivo custom.d.ts e declarado como uma interface NextPageProps para simplificar
@@ -55,7 +56,14 @@ export const getServerSideProps: GetServerSideProps<
       },
     };
   } catch (error) {
-    console.log(error);
+    // if (error instanceof CustomError) {
+    //   //console.log(error);
+    //   console.log("Error: CustomError");
+    // }
+    if (error instanceof ResourceNotFoundError) {
+      // console.log("Error: ResourceNotFoundError");
+      return { notFound: true };
+    }
     return {
       props: {
         error: {

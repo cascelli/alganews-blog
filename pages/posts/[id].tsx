@@ -4,11 +4,12 @@ import { Post, PostService } from "danielbonifacio-sdk";
 import { GetServerSideProps } from "next";
 import { ParsedUrlQuery } from "querystring";
 
-interface PostProps {
+interface PostProps extends NextPageProps {
   post?: Post.Detailed;
-  error?: {
-    message: string;
-  };
+  // Movido para o arquivo custom.d.ts e declarado como uma interface NextPageProps para simplificar
+  //   error?: {
+  //     message: string;
+  //   };
 }
 
 export default function PostPage(props: PostProps) {
@@ -19,8 +20,11 @@ export default function PostPage(props: PostProps) {
 
   console.log(query);
   */
-  if (props.error)
-    return <div style={{ color: "red" }}>{props.error.message}</div>;
+
+  // Logica de tratamento de erro movida para _app.tsx
+  // if (props.error)
+  //   return <div style={{ color: "red" }}>{props.error.message}</div>;
+
   return <div>{props.post?.title}</div>;
 }
 

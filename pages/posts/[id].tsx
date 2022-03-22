@@ -6,6 +6,9 @@ import { ParsedUrlQuery } from "querystring";
 
 interface PostProps {
   post?: Post.Detailed;
+  error?: {
+    message: string;
+  };
 }
 
 export default function PostPage(props: PostProps) {
@@ -16,7 +19,8 @@ export default function PostPage(props: PostProps) {
 
   console.log(query);
   */
-
+  if (props.error)
+    return <div style={{ color: "red" }}>{props.error.message}</div>;
   return <div>{props.post?.title}</div>;
 }
 
@@ -46,9 +50,14 @@ export const getServerSideProps: GetServerSideProps<
         post,
       },
     };
-  } catch (err) {
+  } catch (error) {
+    console.log(error);
     return {
-      props: {},
+      props: {
+        error: {
+          message: error.message,
+        },
+      },
     };
   }
 };

@@ -60,6 +60,7 @@ export const getServerSideProps: GetServerSideProps<
       props: {
         error: {
           message: error.message,
+          statusCode: error.data?.status || 500,
         },
       },
     };

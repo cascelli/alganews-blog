@@ -5,6 +5,7 @@ import { GetServerSideProps } from "next";
 import { ParsedUrlQuery } from "querystring";
 import { ResourceNotFoundError } from "danielbonifacio-sdk/dist/errors";
 // import CustomError from "danielbonifacio-sdk/dist/CustomError";
+
 interface PostProps extends NextPageProps {
   post?: Post.Detailed;
   // Movido para o arquivo custom.d.ts e declarado como uma interface NextPageProps para simplificar
@@ -32,7 +33,7 @@ export default function PostPage(props: PostProps) {
 // Obter parametros da query : método 2
 
 interface Params extends ParsedUrlQuery {
-  id: string;
+  pid: string[];
 }
 
 export const getServerSideProps: GetServerSideProps<
@@ -43,7 +44,9 @@ export const getServerSideProps: GetServerSideProps<
   try {
     if (!params) return { notFound: true };
 
-    const { id } = params;
+    //console.log(params);
+
+    const [id, slug] = params.pid;
     const postId = Number(id);
 
     if (isNaN(postId)) return { notFound: true };

@@ -2,13 +2,27 @@ import { Post, PostService } from "danielbonifacio-sdk";
 import { GetServerSideProps } from "next";
 import { ParsedUrlQuery } from "querystring";
 import { ResourceNotFoundError } from "danielbonifacio-sdk/dist/errors";
+import Head from "next/head";
 
 interface PostProps extends NextPageProps {
   post?: Post.Detailed;
+  host?: string;
 }
 
 export default function PostPage(props: PostProps) {
-  return <div>{props.post?.title}</div>;
+  // return <div>{props.post?.title}</div>;
+  return (
+    <>
+      <Head>
+        <link
+          rel="canonical"
+          href={`http://${props.host}/${props.post?.id}/${props.post?.slug}`}
+        />
+      </Head>
+
+      <div>{props.post?.title}</div>
+    </>
+  );
 }
 
 interface Params extends ParsedUrlQuery {
@@ -19,7 +33,7 @@ interface Params extends ParsedUrlQuery {
 export const getServerSideProps: GetServerSideProps<
   PostProps,
   Params
-> = async ({ params, res }) => {
+> = async ({ params, res, req }) => {
   try {
     if (!params) return { notFound: true };
 
@@ -30,15 +44,16 @@ export const getServerSideProps: GetServerSideProps<
 
     const post = await PostService.getExistingPost(postId);
 
-    if (slug !== post.slug) {
-      res.statusCode = 301;
-      res.setHeader("Location", `/posts/${post.id}/${post.slug}`);
-      return { props: {} };
-    }
+    // if (slug !== post.slug) {
+    //   res.statusCode = 301;
+    //   res.setHeader("Location", `/posts/${post.id}/${post.slug}`);
+    //   return { props: {} };
+    // }
 
     return {
       props: {
         post,
+        host: req.headers.host,
       },
     };
   } catch (error) {

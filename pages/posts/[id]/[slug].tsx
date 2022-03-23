@@ -3,6 +3,7 @@ import { GetServerSideProps } from "next";
 import { ParsedUrlQuery } from "querystring";
 import { ResourceNotFoundError } from "danielbonifacio-sdk/dist/errors";
 import Head from "next/head";
+import PostHeader from "../../../components/PostHeader";
 
 interface PostProps extends NextPageProps {
   post?: Post.Detailed;
@@ -11,6 +12,8 @@ interface PostProps extends NextPageProps {
 
 export default function PostPage(props: PostProps) {
   // return <div>{props.post?.title}</div>;
+  const { post } = props;
+
   return (
     <>
       <Head>
@@ -20,7 +23,18 @@ export default function PostPage(props: PostProps) {
         />
       </Head>
 
-      <div>{props.post?.title}</div>
+      {/* <div>{props.post?.title}</div> */}
+
+      {post && (
+        <>
+          <PostHeader
+            thumbnail={post?.imageUrls.large}
+            createdAt={post?.createdAt}
+            editor={post?.editor}
+            title={post?.title}
+          />
+        </>
+      )}
     </>
   );
 }

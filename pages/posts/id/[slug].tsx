@@ -1,57 +1,40 @@
-// import { useRouter } from "next/router";
-
 import { Post, PostService } from "danielbonifacio-sdk";
 import { GetServerSideProps } from "next";
 import { ParsedUrlQuery } from "querystring";
 import { ResourceNotFoundError } from "danielbonifacio-sdk/dist/errors";
-// import CustomError from "danielbonifacio-sdk/dist/CustomError";
 
 interface PostProps extends NextPageProps {
   post?: Post.Detailed;
-  // Movido para o arquivo custom.d.ts e declarado como uma interface NextPageProps para simplificar
-  //   error?: {
-  //     message: string;
-  //   };
 }
 
 export default function PostPage(props: PostProps) {
-  /*
-  // Obter parametros da query : método 1
-  const router = useRouter();
-  const { query } = router;
-
-  console.log(query);
-  */
-
-  // Logica de tratamento de erro movida para _app.tsx
-  // if (props.error)
-  //   return <div style={{ color: "red" }}>{props.error.message}</div>;
-
   return <div>{props.post?.title}</div>;
 }
 
-// Obter parametros da query : método 2
-
 interface Params extends ParsedUrlQuery {
-  pid: string[];
+  id: string;
+  slug: string;
 }
 
 export const getServerSideProps: GetServerSideProps<
   PostProps,
   Params
-> = async ({ params }) => {
-  // console.log(params);
+> = async ({ params, res }) => {
   try {
     if (!params) return { notFound: true };
 
-    //console.log(params);
-
-    const [id, slug] = params.pid;
+    const { id, slug } = params;
     const postId = Number(id);
 
     if (isNaN(postId)) return { notFound: true };
 
     const post = await PostService.getExistingPost(postId);
+
+    if (slug !== post.slug) {
+      res.statusCode = 301;
+      res.setHeader("Location", `/posts/${post.id}/${post.slug}`);
+      return { props: {} };
+    }
 
     return {
       props: {
@@ -59,12 +42,7 @@ export const getServerSideProps: GetServerSideProps<
       },
     };
   } catch (error) {
-    // if (error instanceof CustomError) {
-    //   //console.log(error);
-    //   console.log("Error: CustomError");
-    // }
     if (error instanceof ResourceNotFoundError) {
-      // console.log("Error: ResourceNotFoundError");
       return { notFound: true };
     }
     return {

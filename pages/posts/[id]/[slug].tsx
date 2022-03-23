@@ -16,7 +16,7 @@ export default function PostPage(props: PostProps) {
       <Head>
         <link
           rel="canonical"
-          href={`http://${props.host}/${props.post?.id}/${props.post?.slug}`}
+          href={`http://${props.host}/posts/${props.post?.id}/${props.post?.slug}`}
         />
       </Head>
 

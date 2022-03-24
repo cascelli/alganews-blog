@@ -7,6 +7,8 @@ import GlobalStyles from "../styles/globalStyles";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Content from "../components/Content";
+import ProgressBar from "@badrap/bar-of-progress";
+import { Router } from "next/router";
 
 interface CustomAppProps extends NextPageProps {
   // Movido para o arquivo custom.d.ts e declarado como uma interface NextPageProps para simplificar
@@ -19,6 +21,12 @@ interface CustomAppProps extends NextPageProps {
 type AppProps<P = any> = {
   pageProps: p;
 } & Omit<NextAppProps<P>, "pageProps">;
+
+const progress = new ProgressBar({
+  size: 2,
+  color: light.primaryBackground,
+  delay: 100,
+});
 
 function MyApp({ Component, pageProps }: AppProps<CustomAppProps>) {
   // return <Component {...pageProps} />
@@ -33,6 +41,7 @@ function MyApp({ Component, pageProps }: AppProps<CustomAppProps>) {
       />
     );
   }
+
   return (
     <ThemeProvider theme={light}>
       <Header />
@@ -44,4 +53,9 @@ function MyApp({ Component, pageProps }: AppProps<CustomAppProps>) {
     </ThemeProvider>
   );
 }
+
+Router.events.on("routeChangeStart", progress.start);
+Router.events.on("routeChangeComplete", progress.finish);
+Router.events.on("routeChangeError", progress.finish);
+
 export default MyApp;

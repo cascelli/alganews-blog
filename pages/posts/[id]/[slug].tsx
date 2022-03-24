@@ -1,4 +1,5 @@
 import { Post, PostService } from "danielbonifacio-sdk";
+import { DiscussionEmbed } from "disqus-react";
 import { GetServerSideProps } from "next";
 import { ParsedUrlQuery } from "querystring";
 import { ResourceNotFoundError } from "danielbonifacio-sdk/dist/errors";
@@ -43,6 +44,16 @@ export default function PostPage(props: PostProps) {
           />
 
           <Markdown>{post.body}</Markdown>
+
+          <DiscussionEmbed
+            shortname="alganews"
+            config={{
+              url: `http://${props.host}/posts/${props.post?.id}/${props.post?.slug}`,
+              identifier: String(post.id),
+              title: post.title,
+              language: "pt_BR",
+            }}
+          />
         </>
       )}
     </>

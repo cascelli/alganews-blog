@@ -142,8 +142,21 @@ export default createGlobalStyle`
             white-space: nowrap;
         }
 
+        pre > code {
+            white-space: inherit!important;
+            display: inline-block;
+        }
+
+        pre {
+            color: ${(p) => p.theme.pageBackground};
+            background-color: ${(p) => p.theme.pageForeground};
+            border-radius: ${(p) => p.theme.borderRadius};
+            
+            overflow-x: auto;
+        }
+
         img {
-            max-width: 100%; 
+            max-width: 100%;
         }
 
 

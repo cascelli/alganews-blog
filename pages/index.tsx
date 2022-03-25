@@ -62,7 +62,11 @@ export const getServerSideProps: GetServerSideProps<HomeProps> = async ({
 }) => {
   const { page: _page } = query;
 
-  const page = Number(_page);
+  // const page = Number(_page);
+  // Substituido pela instrução abaixo para evitar recarregamento
+  //  da página home a partir o link "home" do menu
+  // Força sempre _page a ter um numero mesmo quando não for passadao como parametro
+  const page = _page ? Number(_page) : 1;
 
   if (isNaN(page) || page < 1) {
     return sendToHomePage(res);

@@ -10,6 +10,9 @@ import Content from "../components/Content";
 import ProgressBar from "@badrap/bar-of-progress";
 import { Router } from "next/router";
 
+// necessário para alterar a base URL dos servicos no danielbonifacio-sdk
+import "../httpConfig";
+
 interface CustomAppProps extends NextPageProps {
   // Movido para o arquivo custom.d.ts e declarado como uma interface NextPageProps para simplificar
   // error?: {
